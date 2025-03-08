@@ -1,11 +1,11 @@
 package ee.assignment.backend.dto;
 
+import ee.assignment.backend.enums.FlightStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -17,6 +17,5 @@ public class FlightDTO {
     private String destination;
     private LocalDateTime departureTime;
     private int duration;
-    private String status;
-    private List<Long> seatIds;
+    private FlightStatus status;
 }
