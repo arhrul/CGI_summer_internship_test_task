@@ -32,7 +32,10 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/client").permitAll()
+                        .requestMatchers("/client/**").permitAll()
                         .requestMatchers("/flight").permitAll()
+                        .requestMatchers("/flight/**").permitAll()
+                        .requestMatchers("/seat/**").permitAll()
                         .requestMatchers("/seat").permitAll()
                         .anyRequest().authenticated()
                 )

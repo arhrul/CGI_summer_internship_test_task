@@ -1,19 +1,21 @@
 package ee.assignment.backend.model;
 
+import ee.assignment.backend.enums.FlightStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
 public class Flight {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -29,9 +31,6 @@ public class Flight {
     private int duration;
 
     @Column(nullable = false)
-    private String status;
+    private FlightStatus status;
 
-    @OneToMany(mappedBy = "flight")
-    @Column(nullable = false)
-    private List<Seat> seats;
 }
