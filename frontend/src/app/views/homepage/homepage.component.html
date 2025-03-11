@@ -1,1 +1,50 @@
-<h1 class="text-center">Homepage works!</h1>
+<div class="first-section" [ngStyle]="{'background-image': 'url(' + bgPic + ')'}">
+  <app-header></app-header>
+    <div class="container">
+        <div class="first-section-wrapper">
+            <h1 class="text-center ms-auto me-auto mb-3">Embark on your journey to secureng
+                the ideal getaway.</h1>
+            <h2 class="text-center fs-5">
+              Tempora facere doloribus id aut. Ea maiores esse accusantium laboriosam.
+              Quos commodi non assumenda quam illum. Id omnis saepe corrupti incidunt qui sed delectus.
+              Eaque minus ducimus ut ratione iste quod commodi et.
+            </h2>
+            <div>
+              <form [formGroup]="flightsForm" (ngSubmit)="onSubmit()" action="" class="d-flex justify-content-between w-75 me-auto ms-auto search-flights">
+                <div class="d-flex flex-column">
+                  <label for="departures">Departure</label>
+                  <select formControlName="departure" id="departures" name="departure" class="input-field">
+                    <option value="" selected disabled>Choose departure</option>
+                    <option *ngFor="let departure of cities" [value]="departure.value">{{ departure.name }}</option>
+                  </select>
+                </div>
+
+                <div class="d-flex flex-column">
+                  <label for="destinations">Destination</label>
+                  <select formControlName="destination" id="destinations" name="destination" class="input-field">
+                    <option value="" selected disabled>Choose destination</option>
+                    <option *ngFor="let destination of cities"
+                            [value]="destination.value">{{ destination.name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="d-flex flex-column">
+                  <label for="departureDate">Departure date</label>
+                  <input formControlName="date" type="date" id="departureDate" class="input-field">
+                </div>
+
+                <div class="d-flex flex-column">
+                  <label for="numberOfPassengers">Number of passengers</label>
+                  <input formControlName="numberOfPeople" type="number" id="numberOfPassengers" class="input-field">
+                </div>
+                <div class="align-content-end">
+                  <button type="submit" [disabled]="flightsForm.invalid" class="btn search-flights-btn h-75">Search Flights</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+<app-flights></app-flights>
+<app-footer></app-footer>

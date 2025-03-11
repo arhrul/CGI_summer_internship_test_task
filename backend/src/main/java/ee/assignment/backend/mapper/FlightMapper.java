@@ -11,5 +11,5 @@ import java.util.List;
 public interface FlightMapper {
     FlightDTO toFlightDTO(Flight flight);
     Flight toFlight(FlightDTO flightDTO);
-    List<FlightDTO> toFlightDTO(List<Flight> flights);
+    List<FlightDTO> toFlightDTOList(List<Flight> flights);
 }

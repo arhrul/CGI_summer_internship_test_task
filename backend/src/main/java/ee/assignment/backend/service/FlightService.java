@@ -1,19 +1,23 @@
 package ee.assignment.backend.service;
 
+import ee.assignment.backend.criteria.FlightSearchCriteria;
 import ee.assignment.backend.dto.FlightDTO;
 import ee.assignment.backend.mapper.FlightMapper;
 import ee.assignment.backend.model.Flight;
+import ee.assignment.backend.repository.FlightCriteriaRepository;
 import ee.assignment.backend.repository.FlightRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class FlightService {
     private final FlightRepository flightRepository;
     private final FlightMapper flightMapper;
+    private final FlightCriteriaRepository flightCriteriaRepository;
 
     public FlightDTO createFlight(FlightDTO flightDTO) {
         Flight flight = flightMapper.toFlight(flightDTO);
@@ -34,9 +38,13 @@ public class FlightService {
         return flightRepository.findAll();
     }
 
+    public List<FlightDTO> getAllFlights(FlightSearchCriteria roomSearchCriteria) {
+        return flightMapper.toFlightDTOList(flightCriteriaRepository.getAllFlights(roomSearchCriteria));
+    }
+
     public List<FlightDTO> getAllFlightsDTO() {
         List<Flight> flights = getAllFlightsEntity();
-        return flightMapper.toFlightDTO(flights);
+        return flightMapper.toFlightDTOList(flights);
     }
 
     public FlightDTO updateFlight(Long id, FlightDTO flightDTO) {
