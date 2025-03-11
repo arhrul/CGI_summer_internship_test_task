@@ -1,0 +1,44 @@
+.header {
+  display: flex;
+  padding: 14px;
+  align-items: center;
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(234, 240, 240, 0.30) 0%, rgba(234, 240, 240, 0.20) 100%);
+  backdrop-filter: blur(6px);
+  width: 90%;
+
+  position: sticky;
+  top: 20px
+}
+
+.sign-in-btn {
+  color: #283841;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1px;
+}
+
+.sign-up-btn {
+  display: flex;
+  padding: 12px 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  background: #C08B7D;
+
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+
+.sign-up-btn:hover {
+  background: #9a6f64 ;
+}

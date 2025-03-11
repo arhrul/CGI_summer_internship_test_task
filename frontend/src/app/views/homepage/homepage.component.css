@@ -1,0 +1,81 @@
+h1 {
+  margin-top: 120px;
+  color: #FFF;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 72px; /* 120% */
+  letter-spacing: 4px;
+  text-transform: capitalize;
+}
+
+h2 {
+  color: #FFF;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  margin-bottom: 155px;
+}
+
+.first-section {
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.search-flights {
+  border-radius: 24px;
+  background: #EAF0F0;  padding: 28px;
+}
+
+.first-section-wrapper {
+  padding-bottom: 77px;
+}
+
+.input-field {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background: rgba(40, 56, 65, 0.06);
+  border: 1px solid #e5e5e5;
+  appearance: none;
+}
+
+.input-field:focus {
+  border: 1px solid #b0b0b0;
+  outline: none;
+}
+
+.input-field option {
+  color: #283841;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+
+.search-flights-btn {
+  border-radius: 8px;
+  background: #C08B7D;
+  padding: 10px;
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1px;
+  height: 100%;
+}
+
+.search-flights-btn:hover {
+  background: #9a6f64;
+}

@@ -1,0 +1,50 @@
+.flights {
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+h4 {
+  text-align: center;
+}
+
+p {
+  margin: 0;
+}
+
+.flight-table {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.flight-table:hover {
+  transform: translateY(-5px);
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #9a6f64;
+  color: white;
+  font-weight: bold;
+}
+
+
+
+.book-btn {
+  background: #C08B7D;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.book-btn:hover {
+  background: #9a6f64;
+}

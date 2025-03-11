@@ -1,0 +1,45 @@
+<div class="second-section">
+  <div class="container">
+    <div class="second-section-wrapper d-flex">
+      <div class="filters me-5">
+        <h4>Filters</h4>
+      </div>
+      <div class="flights">
+        <h4 class="mb-4">Flights</h4>
+        <div *ngIf="flights.length == 0">
+          <h4>No flights found!</h4>
+        </div>
+        <div *ngFor="let flight of flights">
+          <table class="flight-table mb-4">
+            <thead>
+            <tr>
+              <th>Take off</th>
+              <th>Landing</th>
+              <th>Total time</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="departure">
+                <p class="time fs-4 fw-bold">{{ getDepartureTime(flight) }}</p>
+                <p class="date">{{ getDepartureDate(flight) }}</p>
+                <p class="city">{{ flight.departure }}</p>
+              </td>
+              <td class="destination">
+                <p class="time fs-4 fw-bold">{{ getDestinationTime(flight) }}</p>
+                <p class="date">{{ getDestinationDate(flight) }}</p>
+                <p class="city">{{ flight.destination }}</p>
+              </td>
+              <td class="total-time fw-bold">{{ formatDuration(flight.duration) }}</td>
+              <td><button class="btn book-btn">BOOK NOW</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

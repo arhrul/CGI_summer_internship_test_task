@@ -1,11 +1,15 @@
 package ee.assignment.backend.controller;
 
+import ee.assignment.backend.criteria.FlightSearchCriteria;
 import ee.assignment.backend.dto.FlightDTO;
 import ee.assignment.backend.service.FlightService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +24,7 @@ import java.util.List;
 @RequestMapping("/flight")
 public class FlightController {
 
+    private static final Logger log = LoggerFactory.getLogger(FlightController.class);
     private final FlightService flightService;
 
     @PostMapping
@@ -38,6 +43,13 @@ public class FlightController {
     public ResponseEntity<FlightDTO> getFlight(@PathVariable Long id) {
         FlightDTO flight = flightService.getFlight(id);
         return ResponseEntity.ok(flight);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FlightDTO>> getFlightsBySearch(@ModelAttribute FlightSearchCriteria criteria) {
+        log.info("getFlightsBySearch criteria: {}", criteria);
+        List<FlightDTO> rooms = flightService.getAllFlights(criteria);
+        return ResponseEntity.ok(rooms);
     }
 
     @PutMapping("/{id}")
