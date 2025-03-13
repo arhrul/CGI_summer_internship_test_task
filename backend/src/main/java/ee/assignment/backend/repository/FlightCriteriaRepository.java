@@ -9,6 +9,8 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class FlightCriteriaRepository {
+    private static final Logger log = LoggerFactory.getLogger(FlightCriteriaRepository.class);
     private final EntityManager entityManager;
 
     public List<Flight> getAllFlights(FlightSearchCriteria criteria) {
@@ -40,6 +43,38 @@ public class FlightCriteriaRepository {
             LocalDateTime startOfDay = criteria.getDepartureTime().atStartOfDay();
             LocalDateTime endOfDay = criteria.getDepartureTime().atTime(LocalTime.MAX);
             predicates.add(builder.between(root.get("departureTime"), startOfDay, endOfDay));
+        }
+
+        if (criteria.getDurationStartTime() != null && criteria.getDurationEndTime() != null) {
+            Integer durationStartTime = criteria.getDurationStartTime();
+            Integer durationEndTime = criteria.getDurationEndTime();
+            predicates.add(builder.between(root.get("duration"), durationStartTime, durationEndTime));
+        }
+
+        if (criteria.getDepartureStartTime() != null
+                && criteria.getDepartureEndTime() != null
+                && criteria.getDepartureTime() != null) {
+            int departureStartHour = criteria.getDepartureStartTime() / 2;
+            int departureStartMinute = (criteria.getDepartureStartTime() % 2) * 30;
+
+            if (departureStartHour == 24) {
+                departureStartHour = 23;
+                departureStartMinute = 59;
+            }
+
+            int departureEndHour = criteria.getDepartureEndTime() / 2;
+            int departureEndMinute = (criteria.getDepartureEndTime() % 2) * 30;
+
+            if (departureEndHour == 24) {
+                departureEndHour = 23;
+                departureEndMinute = 59;
+            }
+
+            LocalDateTime startTime = criteria.getDepartureTime().atStartOfDay()
+                    .withHour(departureStartHour).withMinute(departureStartMinute);
+            LocalDateTime endTime = criteria.getDepartureTime().atStartOfDay()
+                    .withHour(departureEndHour).withMinute(departureEndMinute);
+            predicates.add(builder.between(root.get("departureTime"), startTime, endTime));
         }
 
         if (!predicates.isEmpty()) {

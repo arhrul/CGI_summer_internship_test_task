@@ -1,11 +1,38 @@
 <div class="second-section">
   <div class="container">
     <div class="second-section-wrapper d-flex">
-      <div class="filters me-5">
-        <h4>Filters</h4>
+      <div class="filters me-5 mt-4">
+        <h4 class="mb-5">Filters</h4>
+        <div class="time-filter mb-5">
+          <h5>Departure times</h5>
+          <mat-slider min="0" max="48" step="1" (input)="onTimeSliderChange($event)">
+            <input matSliderStartThumb [(ngModel)]="startTime">
+            <input matSliderEndThumb [(ngModel)]="endTime">
+          </mat-slider>
+          <p>{{ formatTime(startTime) }} - {{ formatTime(endTime) }}</p>
+        </div>
+
+        <div class="duration-filter mb-5">
+          <h5>Journey duration</h5>
+          <mat-slider min="0" max="30" step="1"  (input)="onDurationSliderChange($event)">
+            <input matSliderStartThumb [(ngModel)]="startDuration">
+            <input matSliderEndThumb [(ngModel)]="endDuration">
+          </mat-slider>
+          <p>{{ startDuration }}h - {{ endDuration }}h</p>
+        </div>
+
+        <div class="price-filter mb-5">
+          <h5>Price range</h5>
+          <mat-slider min="0" max="1000" step="10"  (input)="onPriceSliderChange($event)">
+            <input matSliderStartThumb [(ngModel)]="startPrice">
+            <input matSliderEndThumb [(ngModel)]="endPrice">
+          </mat-slider>
+          <p>{{ startPrice }}€ - {{ endPrice }}€</p>
+        </div>
       </div>
-      <div class="flights">
-        <h4 class="mb-4">Flights</h4>
+
+      <div class="flights mt-4 ms-auto me-auto">
+        <h4 class="mb-5">Flights</h4>
         <div *ngIf="flights.length == 0">
           <h4>No flights found!</h4>
         </div>
@@ -15,7 +42,8 @@
             <tr>
               <th>Take off</th>
               <th>Landing</th>
-              <th>Total time</th>
+              <th>Duration</th>
+              <th>Price From</th>
               <th></th>
             </tr>
             </thead>
@@ -32,6 +60,7 @@
                 <p class="city">{{ flight.destination }}</p>
               </td>
               <td class="total-time fw-bold">{{ formatDuration(flight.duration) }}</td>
+              <td class="fw-bold">100$</td>
               <td><button class="btn book-btn">BOOK NOW</button></td>
             </tr>
             </tbody>

@@ -3,4 +3,8 @@ export interface SearchCriteria {
   destination: string;
   date: Date;
   numberOfPeople: number;
+  durationStartTime: number;
+  durationEndTime: number;
+  departureStartTime: number;
+  departureEndTime: number
 }

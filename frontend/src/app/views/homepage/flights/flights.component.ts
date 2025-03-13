@@ -1,36 +1,81 @@
 import {Component, OnInit} from '@angular/core';
 import {FlightService} from '../../../core/services/flightService/flight.service';
 import {Flight} from '../../../core/model/Flight';
-import {NgForOf, NgIf} from '@angular/common';
+import {NgForOf, NgIf, NgStyle} from '@angular/common';
 import {SearchCriteria} from '../../../core/model/SearchCriteria';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
+import {MatSlider, MatSliderModule, MatSliderRangeThumb} from '@angular/material/slider';
+
+
 
 @Component({
   selector: 'app-flights',
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    NgStyle,
+    FormsModule,
+    MatSlider,
+    MatSliderRangeThumb,
+    MatSliderModule
   ],
   templateUrl: './flights.component.html',
   standalone: true,
-  styleUrl: './flights.component.css'
+  styleUrl: './flights.component.css',
 })
 export class FlightsComponent implements OnInit {
   flights: Flight[] = [];
 
-  constructor(private flightService: FlightService) {
+  startTime: number = 0;
+  endTime: number = 48
+
+  startDuration = 0
+  endDuration = 30
+
+  startPrice = 0
+  endPrice = 1000
+
+  flightsForm: FormGroup | null = null
+
+  constructor(private flightService: FlightService, private readonly formBuilder: FormBuilder) {
 
   }
 
   ngOnInit(): void {
+    this.getForm()
+  }
+
+  getForm() {
+    this.flightService.flightFormData$.subscribe((form) => {
+      if (form) {
+        this.flightsForm = form
+      }
+    })
+  }
+
+  updateForm() {
+    if (this.flightsForm) {
+      this.flightsForm.patchValue({
+        durationStartTime: this.startDuration * 60,
+        durationEndTime: this.endDuration * 60,
+        departureStartTime: this.startTime,
+        departureEndTime: this.endTime
+      })
+      this.flightService.setFlightFormData(this.flightsForm)
+      this.getFlights(this.flightsForm.value)
+    }
+    if (this.flightsForm) {
+      console.log("Form updated!", this.flightsForm.value)
+    }
+
   }
 
   getFlights(searchCriteria: SearchCriteria): void {
-
+    console.log("Search Criteria",searchCriteria)
     this.flightService.searchFlights(searchCriteria).subscribe({
       next: (data) => {
         this.flights = data;
-        console.log('Flights received:', this.flights);
+        console.log('Flights received:', data);
       },
       error: (err) => {
         console.error('Error fetching flights:', err);
@@ -87,5 +132,31 @@ export class FlightsComponent implements OnInit {
 
     return `${hoursFormatted}h ${minutesFormatted}min`;
 
+  }
+
+  formatTime(value: number): string {
+    const hours = Math.floor(value / 2);
+    const minutes = (value % 2) * 30;
+
+    if (value === 48) {
+      return `23:59`;
+    }
+
+    return `${this.pad(hours)}:${this.pad(minutes)}`;
+  }
+
+  pad(num: number): string {
+    return num < 10 ? '0' + num : num.toString();
+  }
+
+  onTimeSliderChange(event: any): void {
+    this.updateForm()
+  }
+
+  onDurationSliderChange(event: any): void {
+    this.updateForm()
+  }
+
+  onPriceSliderChange(event: any): void {
   }
 }
