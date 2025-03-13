@@ -1,7 +1,4 @@
-.flights {
-  max-width: 700px;
-  margin: 20px auto;
-}
+
 
 h4 {
   text-align: center;
@@ -48,3 +45,9 @@ th {
 .book-btn:hover {
   background: #9a6f64;
 }
+
+
+mat-slider {
+  width: 250px;
+}
+

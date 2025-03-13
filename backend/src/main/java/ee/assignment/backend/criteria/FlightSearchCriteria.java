@@ -11,5 +11,8 @@ public class FlightSearchCriteria {
     private String destination;
     private LocalDate departureTime;
     private int numberOfPeople;
-    private final Optional<String> sortDirection;
+    private Integer durationStartTime;
+    private Integer durationEndTime;
+    private Integer departureStartTime;
+    private Integer departureEndTime;
 }

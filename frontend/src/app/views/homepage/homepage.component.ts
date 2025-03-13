@@ -37,29 +37,29 @@ export class HomepageComponent implements OnInit{
     private readonly formBuilder: FormBuilder
   ) {
     this.bgPic = imageService.bgPic
-  }
 
-  ngOnInit(): void {
-    this.getFlights()
-    this.createForm()
-  }
-
-  onSubmit() {
-    if (this.flightsForm.valid) {
-      console.log('Form submited!', this.flightsForm.value);
-      const searchCriteria = this.flightsForm.value;
-      this.flightsComponent.getFlights(searchCriteria);
-    }
-  }
-
-  createForm() {
     this.flightsForm = this.formBuilder.group({
       departure: ['', [Validators.required]],
       destination: ['', [Validators.required]],
       date: ['', [Validators.required]],
-      numberOfPeople: ['', Validators.required]
+      numberOfPeople: ['', Validators.required],
+      departureStartTime: [''],
+      departureEndTime: [''],
+      durationStartTime: [''],
+      durationEndTime: ['']
     });
+  }
 
+  ngOnInit(): void {
+    this.getFlights()
+  }
+
+  onSubmit() {
+    if (this.flightsForm.valid) {
+      const searchCriteria = this.flightsForm.value;
+      this.flightService.setFlightFormData(this.flightsForm);
+      this.flightsComponent.getFlights(searchCriteria);
+    }
   }
 
   getFlights() {
@@ -80,7 +80,6 @@ export class HomepageComponent implements OnInit{
       ...new Set(this.flights.flatMap(flight => [flight.departure, flight.destination]))
     ].map(city => ({ value: city, name: city }));
 
-    console.log(uniqueCities);
     this.cities = uniqueCities;
   }
 
