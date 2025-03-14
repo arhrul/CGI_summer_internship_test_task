@@ -48,6 +48,7 @@ public class SeatService {
         seat.setFlight(flight);
         seat.setIsAvailable(true);
         seat.setPrice(calculatePrice(price, legSpace, seatClass, seatPlace));
+        seat.setClient(null);
         Seat savedSeat = seatRepository.save(seat);
         return seatMapper.toSeatDTO(savedSeat);
     }

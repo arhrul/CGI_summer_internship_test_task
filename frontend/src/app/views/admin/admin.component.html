@@ -1,0 +1,28 @@
+<div class="admin">
+  <div class="container">
+    <div class="admin-wrapper">
+      <h1>Admin page</h1>
+      <button class="btn btn-primary update-btn" [routerLink]="['/homepage']">
+        Go to Homepage
+      </button>
+      <br>
+      <div class="btn-group mt-lg-4 button-group-spacing mb-4" role="group">
+        <button class="btn btn-secondary" (click)="activeSection = 'flight'">Flight Management</button>
+        <button class="btn btn-secondary" (click)="activeSection = 'client'">Client Management</button>
+        <button class="btn btn-secondary" (click)="activeSection = 'seat'">Seat Management</button>
+      </div>
+
+      <div *ngIf="activeSection === 'flight'">
+        <app-flight-management></app-flight-management>
+      </div>
+
+      <div *ngIf="activeSection === 'client'">
+      </div>
+
+      <div *ngIf="activeSection === 'seat'">
+        <app-seat-management></app-seat-management>
+      </div>
+
+    </div>
+  </div>
+</div>

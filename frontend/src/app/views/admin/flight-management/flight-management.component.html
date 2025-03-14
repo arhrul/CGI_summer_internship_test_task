@@ -1,0 +1,69 @@
+<div class="flight-management">
+  <div class="container">
+    <div class="flight-management-wrapper">
+      <form [formGroup]="flightForm" class="create-flight-form" (ngSubmit)="onSubmit()">
+        <div class="d-flex flex-column w-25 mb-4">
+          <label for="departure">Departure</label>
+          <input formControlName="departure" type="text" id="departure">
+        </div>
+        <div class="d-flex flex-column w-25 mb-4">
+          <label for="destination">Destination</label>
+          <input formControlName="destination" type="text" id="destination">
+        </div>
+        <div class="d-flex flex-column w-25 mb-4">
+          <label for="duration">Duration</label>
+          <input formControlName="duration" type="number" id="duration">
+        </div>
+        <div class="d-flex flex-column w-25 mb-4">
+          <label for="departureDate">Departure time</label>
+          <input formControlName="departureDate" type="date" id="departureDate">
+        </div>
+        <div class="d-flex flex-column w-25 mb-4">
+          <label for="departureTime">Departure time</label>
+          <input formControlName="departureTime" type="time" id="departureTime">
+        </div>
+        <div class="d-flex flex-column w-25 mb-4">
+          <label for="status">Status</label>
+          <select formControlName="status" id="status" name="departure">
+            <option value="" selected disabled>Select</option>
+            <option *ngFor="let place of getFlightStatusValues()" [value]="place">{{ place }}</option>
+          </select>
+        </div>
+        <div class="d-flex flex-column w-25 mb-3">
+          <label for="price">Price</label>
+          <input formControlName="price" type="number" id="price">
+        </div>
+        <button type="submit" class="btn btn-primary m-3" [disabled]="flightForm.invalid">
+          Create Flight
+        </button>
+      </form>
+
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>Flight ID</th>
+          <th>Departure</th>
+          <th>Destination</th>
+          <th>Duration</th>
+          <th>Departure date</th>
+          <th>Status</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let flight of flights">
+          <td>{{ flight.id }}</td>
+          <td>{{ flight.departure }}</td>
+          <td>{{ flight.destination }}</td>
+          <td>{{ flight.duration }} min</td>
+          <td>{{ flight.departureTime }}</td>
+          <td>{{ flight.status }}</td>
+          <td>{{ flight.price.toFixed(2) }} €</td>
+          <td><button class="btn btn-danger btn-fixed ms-2" (click)="deleteFlight(flight.id)">Delete</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

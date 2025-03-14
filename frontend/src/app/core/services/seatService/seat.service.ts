@@ -14,4 +14,16 @@ export class SeatService {
   getSeatsByFlightId(flightId: number): Observable<Seat[]> {
     return this.http.get<Seat[]>(`${this.apiUrl}/flight/${flightId}`)
   }
+
+  getSeats() {
+    return this.http.get<Seat[]>(this.apiUrl)
+  }
+
+  createSeat(seat: Seat): Observable<Seat> {
+    return this.http.post<Seat>(this.apiUrl, seat)
+  }
+
+  deleteSeat(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`)
+  }
 }

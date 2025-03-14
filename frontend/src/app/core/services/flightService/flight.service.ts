@@ -19,7 +19,13 @@ export class FlightService {
     this.flightFormData.next(form);
   }
 
+  createFlight(flight: Flight): Observable<Flight> {
+    return this.http.post<Flight>(this.apiUrl, flight)
+  }
 
+  deleteFlight(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`)
+  }
 
   getFlights(): Observable<Flight[]> {
     return this.http.get<Flight[]>(this.apiUrl);
