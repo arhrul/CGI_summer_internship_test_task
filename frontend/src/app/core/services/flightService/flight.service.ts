@@ -35,6 +35,8 @@ export class FlightService {
     params = params.set('durationEndTime', searchCriteria.durationEndTime)
     params = params.set('departureStartTime', searchCriteria.departureStartTime)
     params = params.set('departureEndTime', searchCriteria.departureEndTime)
+    params = params.set('priceStart', searchCriteria.priceStart)
+    params = params.set('priceEnd', searchCriteria.priceEnd)
     return this.http.get<any>(`${this.apiUrl}/search`, {params}).pipe(
     map(response => response.content || response)
     )

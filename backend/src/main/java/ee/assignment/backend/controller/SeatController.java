@@ -40,6 +40,13 @@ public class SeatController {
         return ResponseEntity.ok(seat);
     }
 
+    @GetMapping("/flight/{flightId}")
+    public ResponseEntity<List<SeatDTO>> getSeatsByFlightId(@PathVariable Long flightId) {
+        List<SeatDTO> seats = seatService.getSeatsByFlightId(flightId);
+        return ResponseEntity.ok(seats);
+    }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<SeatDTO> updateSeat(@PathVariable Long id, @RequestBody SeatDTO seatDTO) {
         SeatDTO updatedSeat = seatService.updateSeat(id, seatDTO);

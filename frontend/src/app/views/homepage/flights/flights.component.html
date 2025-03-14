@@ -60,7 +60,7 @@
                 <p class="city">{{ flight.destination }}</p>
               </td>
               <td class="total-time fw-bold">{{ formatDuration(flight.duration) }}</td>
-              <td class="fw-bold">100$</td>
+              <td class="fw-bold">{{ formatPrice(flight.price) }}€</td>
               <td><button class="btn book-btn">BOOK NOW</button></td>
             </tr>
             </tbody>

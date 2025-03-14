@@ -38,3 +38,8 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+              - column:
+                  name: price
+                  type: double
+                  constraints:
+                    nullable: false

@@ -15,4 +15,6 @@ public class FlightSearchCriteria {
     private Integer durationEndTime;
     private Integer departureStartTime;
     private Integer departureEndTime;
+    private Double priceStart;
+    private Double priceEnd;
 }

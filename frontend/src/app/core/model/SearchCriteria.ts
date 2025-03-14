@@ -6,5 +6,7 @@ export interface SearchCriteria {
   durationStartTime: number;
   durationEndTime: number;
   departureStartTime: number;
-  departureEndTime: number
+  departureEndTime: number;
+  priceStart: number;
+  priceEnd: number;
 }

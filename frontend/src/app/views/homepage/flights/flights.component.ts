@@ -59,7 +59,9 @@ export class FlightsComponent implements OnInit {
         durationStartTime: this.startDuration * 60,
         durationEndTime: this.endDuration * 60,
         departureStartTime: this.startTime,
-        departureEndTime: this.endTime
+        departureEndTime: this.endTime,
+        priceStart: this.startPrice,
+        priceEnd: this.endPrice
       })
       this.flightService.setFlightFormData(this.flightsForm)
       this.getFlights(this.flightsForm.value)
@@ -145,6 +147,10 @@ export class FlightsComponent implements OnInit {
     return `${this.pad(hours)}:${this.pad(minutes)}`;
   }
 
+  formatPrice(value: number): string {
+    return value.toFixed(2)
+  }
+
   pad(num: number): string {
     return num < 10 ? '0' + num : num.toString();
   }
@@ -158,5 +164,6 @@ export class FlightsComponent implements OnInit {
   }
 
   onPriceSliderChange(event: any): void {
+    this.updateForm()
   }
 }

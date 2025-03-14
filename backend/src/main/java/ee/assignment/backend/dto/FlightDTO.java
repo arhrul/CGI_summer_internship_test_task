@@ -18,4 +18,5 @@ public class FlightDTO {
     private LocalDateTime departureTime;
     private int duration;
     private FlightStatus status;
+    private double price;
 }
