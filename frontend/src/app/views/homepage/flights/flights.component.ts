@@ -64,7 +64,7 @@ export class FlightsComponent implements OnInit {
         priceEnd: this.endPrice
       })
       this.flightService.setFlightFormData(this.flightsForm)
-      this.getFlights(this.flightsForm.value)
+      this.searchFlights(this.flightsForm.value)
     }
     if (this.flightsForm) {
       console.log("Form updated!", this.flightsForm.value)
@@ -72,7 +72,7 @@ export class FlightsComponent implements OnInit {
 
   }
 
-  getFlights(searchCriteria: SearchCriteria): void {
+  searchFlights(searchCriteria: SearchCriteria): void {
     console.log("Search Criteria",searchCriteria)
     this.flightService.searchFlights(searchCriteria).subscribe({
       next: (data) => {
