@@ -51,6 +51,12 @@ public class FlightCriteriaRepository {
             predicates.add(builder.between(root.get("duration"), durationStartTime, durationEndTime));
         }
 
+        if (criteria.getPriceStart() != null &&  criteria.getPriceEnd() != null) {
+            Double priceStart = criteria.getPriceStart();
+            Double priceEnd = criteria.getPriceEnd();
+            predicates.add(builder.between(root.get("price"), priceStart, priceEnd));
+        }
+
         if (criteria.getDepartureStartTime() != null
                 && criteria.getDepartureEndTime() != null
                 && criteria.getDepartureTime() != null) {

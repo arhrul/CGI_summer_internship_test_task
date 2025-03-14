@@ -33,4 +33,7 @@ public class Flight {
     @Column(nullable = false)
     private FlightStatus status;
 
+    @Column(nullable = false)
+    private double price;
+
 }

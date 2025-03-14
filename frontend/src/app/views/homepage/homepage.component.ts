@@ -46,7 +46,9 @@ export class HomepageComponent implements OnInit{
       departureStartTime: [''],
       departureEndTime: [''],
       durationStartTime: [''],
-      durationEndTime: ['']
+      durationEndTime: [''],
+      priceStart: [''],
+      priceEnd: ['']
     });
   }
 

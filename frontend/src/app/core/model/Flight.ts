@@ -7,5 +7,6 @@ export interface Flight {
   departureTime: Date;
   duration: number;
   status: FlightStatus;
+  price: number;
 
 }
