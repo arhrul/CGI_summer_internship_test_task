@@ -2,12 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ImageService} from '../../core/services/imageService/image.service';
 import {NgForOf, NgStyle} from '@angular/common';
 import {HeaderComponent} from '../header/header.component';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {FlightsComponent} from './flights/flights.component';
 import {Flight} from '../../core/model/Flight';
 import {FlightService} from '../../core/services/flightService/flight.service';
 import {FooterComponent} from '../footer/footer.component';
-import {SearchCriteria} from '../../core/model/SearchCriteria';
 
 @Component({
   selector: 'app-homepage',
@@ -39,10 +38,10 @@ export class HomepageComponent implements OnInit{
     this.bgPic = imageService.bgPic
 
     this.flightsForm = this.formBuilder.group({
-      departure: ['', [Validators.required]],
-      destination: ['', [Validators.required]],
-      date: ['', [Validators.required]],
-      numberOfPeople: ['', Validators.required],
+      departure: [''],
+      destination: [''],
+      date: [''],
+      numberOfPeople: [1],
       departureStartTime: [''],
       departureEndTime: [''],
       durationStartTime: [''],
@@ -54,13 +53,14 @@ export class HomepageComponent implements OnInit{
 
   ngOnInit(): void {
     this.getFlights()
+    this.flightService.setFlightFormData(this.flightsForm)
   }
 
   onSubmit() {
     if (this.flightsForm.valid) {
       const searchCriteria = this.flightsForm.value;
       this.flightService.setFlightFormData(this.flightsForm);
-      this.flightsComponent.getFlights(searchCriteria);
+      this.flightsComponent.searchFlights(searchCriteria);
     }
   }
 
@@ -69,6 +69,7 @@ export class HomepageComponent implements OnInit{
       next: (data) => {
         this.flights = data;
         console.log('Flights received:', this.flights);
+        this.flightsComponent.flights = data
         this.getUniqueCities()
       },
       error: (err) => {
@@ -78,11 +79,9 @@ export class HomepageComponent implements OnInit{
   }
 
   getUniqueCities() {
-    const uniqueCities = [
+    this.cities = [
       ...new Set(this.flights.flatMap(flight => [flight.departure, flight.destination]))
-    ].map(city => ({ value: city, name: city }));
-
-    this.cities = uniqueCities;
+    ].map(city => ({value: city, name: city}));
   }
 
 }
