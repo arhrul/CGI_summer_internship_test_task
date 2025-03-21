@@ -1,0 +1,29 @@
+<div class="login-section d-flex align-items-center" [ngStyle]="{'background-image': 'url(' + backgroundImage + ')'}">
+  <button class="btn back-btn text-white m-4 position-fixed top-0" [routerLink]="'/homepage'">Home</button>
+  <div class="container">
+    <div class="login-wrapper d-flex justify-content-center">
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="col-7 col-md-5 d-flex flex-column">
+        <h1 class="text-center text-white">Log in</h1>
+        <div class="form-group">
+          <label for="inputEmail"></label>
+          <input formControlName="email" type="email" class="form-control form-control-lg" id="inputEmail" placeholder="Email">
+        </div>
+
+        <div class="form-group inner-addon inner right-addon position-relative">
+          <label for="inputPassword"></label>
+          <input formControlName="password" name="password"
+                 [type]="showPassword ? 'text' : 'password'"
+                 class="form-control form-control-lg pwd-control"
+                 id="inputPassword" placeholder="Password">
+        </div>
+
+        <button type="submit" class="btn main-btn login-btn mt-5 fs-5 p-2" [disabled]="clientForm.invalid">Log in</button>
+        <div class="dont-have-acc d-flex justify-content-center pt-3">
+          <p class="text-white me-3">Don't have an account?</p>
+          <a class="sign-up text-white" [routerLink]="'/register'" >Sign Up</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

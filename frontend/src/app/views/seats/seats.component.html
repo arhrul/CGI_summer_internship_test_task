@@ -143,18 +143,18 @@
           <h3 class="text-center">Trip Details</h3>
           <div class="line mb-4"></div>
           <div class="departure-destination">
-            <h4 class="fs-5 mb-1">{{ getDepartureDate() }}</h4>
-            <p>{{ getDepartureTime() }}, {{ flight.departure }} - {{ getDestinationTime() }}, {{ flight.destination }}</p>
+            <h4 class="fs-5 mb-1">{{ departureDate }}</h4>
+            <p>{{ departureTime }}, {{ departure }} - {{ destinationTime }}, {{ destination }}</p>
           </div>
         </div>
         <div class="cost">
           <div class="passenger-cost d-flex justify-content-between">
             <p>Passenger</p>
-            <p>{{ selectedSeat.price.toFixed(2) }}€</p>
+            <p>{{ selectedSeatPrice.toFixed(2) }}€</p>
           </div>
           <div class="total d-flex justify-content-between fw-bold fs-4">
             <p>Total</p>
-            <p>{{ selectedSeat.price.toFixed(2) }}€</p>
+            <p>{{ selectedSeatPrice.toFixed(2) }}€</p>
           </div>
         </div>
       </div>

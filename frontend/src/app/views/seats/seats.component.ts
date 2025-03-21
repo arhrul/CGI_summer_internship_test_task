@@ -41,9 +41,16 @@ export class SeatsComponent implements OnInit {
   seatClassValues: string[] = []
 
   selectedSeat!: Seat
+  selectedSeatPrice = 0
 
   seatsForm!: FormGroup
   foundSeats: Seat[] = []
+
+  departure = ''
+  destination = ''
+  departureDate = ''
+  departureTime = ''
+  destinationTime = ''
 
   constructor(private route: ActivatedRoute,
               private flightService: FlightService,
@@ -62,7 +69,11 @@ export class SeatsComponent implements OnInit {
         this.getSeats(flightId);
         this.createForm()
         this.getFlight(this.flightId)
+
         console.log("Flight id", this.flightId)
+      }
+      if (this.flight) {
+
       }
     });
   }
@@ -70,7 +81,14 @@ export class SeatsComponent implements OnInit {
   getFlight(flightId: number) {
     this.flightService.getFlightById(flightId).subscribe({
       next: (data) => {
-        this.flight = data
+        if (data) {
+          this.flight = data
+          this.getDepartureDate()
+          this.getDepartureTime()
+          this.getDestinationTime()
+          this.departure = data.departure
+          this.destination = data.destination
+        }
       }
     })
   }
@@ -112,6 +130,7 @@ export class SeatsComponent implements OnInit {
       let seat: Seat = this.seats[i]
       if (seat.isAvailable) {
         this.selectedSeat = seat
+        this.selectedSeatPrice = seat.price
         return
       }
     }
@@ -119,6 +138,7 @@ export class SeatsComponent implements OnInit {
 
   onSeatClick(seat: Seat) {
     this.selectedSeat = seat
+    this.selectedSeatPrice = seat.price
   }
 
   getSeats(flightId: number) {
@@ -164,14 +184,14 @@ export class SeatsComponent implements OnInit {
   }
 
   getDepartureDate() {
-    return this.flightService.getDepartureDate(this.flight)
+    this.departureDate = this.flightService.getDepartureDate(this.flight)
   }
 
   getDepartureTime() {
-    return this.flightService.getDepartureTime(this.flight)
+    this.departureTime = this.flightService.getDepartureTime(this.flight)
   }
 
   getDestinationTime() {
-    return this.flightService.getDestinationTime(this.flight)
+    this.destinationTime = this.flightService.getDestinationTime(this.flight)
   }
 }

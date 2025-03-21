@@ -7,6 +7,8 @@ import {FlightsComponent} from './flights/flights.component';
 import {Flight} from '../../core/model/Flight';
 import {FlightService} from '../../core/services/flightService/flight.service';
 import {FooterComponent} from '../footer/footer.component';
+import {Router, RouterLink} from '@angular/router';
+import {AuthenticationService} from '../../core/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-homepage',
@@ -16,7 +18,8 @@ import {FooterComponent} from '../footer/footer.component';
     ReactiveFormsModule,
     NgForOf,
     FlightsComponent,
-    FooterComponent
+    FooterComponent,
+    RouterLink
   ],
   templateUrl: './homepage.component.html',
   standalone: true,
@@ -33,7 +36,9 @@ export class HomepageComponent implements OnInit{
   constructor(
     private imageService: ImageService,
     private flightService: FlightService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
+    private authService: AuthenticationService,
+    private router: Router
   ) {
     this.bgPic = imageService.bgPic
 
@@ -57,11 +62,16 @@ export class HomepageComponent implements OnInit{
   }
 
   onSubmit() {
-    if (this.flightsForm.valid) {
-      const searchCriteria = this.flightsForm.value;
-      this.flightService.setFlightFormData(this.flightsForm);
-      this.flightsComponent.searchFlights(searchCriteria);
+    if (this.authService.isLoggedIn()) {
+      if (this.flightsForm.valid) {
+        const searchCriteria = this.flightsForm.value;
+        this.flightService.setFlightFormData(this.flightsForm);
+        this.flightsComponent.searchFlights(searchCriteria);
+      }
+    } else {
+      this.router.navigate(['/login'])
     }
+
   }
 
   getFlights() {

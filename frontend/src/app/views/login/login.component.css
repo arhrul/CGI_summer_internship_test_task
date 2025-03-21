@@ -1,0 +1,51 @@
+.login-section {
+  min-height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.text-shadow {
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.99);
+}
+
+.login-btn {
+  background: #dc9e85;
+  border: 2px solid #816057;
+  transition: ease 0.3s;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background: #c59077;
+}
+
+.sign-up {
+  cursor: pointer;
+  margin: 0;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1px;
+}
+
+.dont-have-acc p {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1px;
+
+}
+
+.back-btn {
+  border: 1px solid white;
+  transition: ease 0.3s;
+}
+
+.back-btn:hover {
+  background: rgba(178, 178, 178, 0.27);
+}

@@ -6,6 +6,7 @@ import {SearchCriteria} from '../../../core/model/SearchCriteria';
 import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
 import {MatSlider, MatSliderModule, MatSliderRangeThumb} from '@angular/material/slider';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../../../core/services/authentication/authentication.service';
 
 
 
@@ -39,7 +40,8 @@ export class FlightsComponent implements OnInit {
 
   constructor(private flightService: FlightService,
               private readonly formBuilder: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              private authService: AuthenticationService) {
 
   }
 
@@ -48,8 +50,13 @@ export class FlightsComponent implements OnInit {
   }
 
   onBookNow(flight: any) {
-    this.flightService.setSelectedFlight(flight);
-    this.router.navigate(['/seats', flight.id])
+    if (this.authService.isLoggedIn()) {
+      this.flightService.setSelectedFlight(flight);
+      this.router.navigate(['/seats', flight.id])
+    } else {
+      this.router.navigate(['/login'])
+    }
+
   }
 
   getForm() {
