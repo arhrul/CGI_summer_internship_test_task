@@ -13,7 +13,6 @@ import {LinkService} from '../../core/services/linkService/link.service';
   imports: [
     ReactiveFormsModule,
     NgStyle,
-    NgIf,
     RouterLink
   ],
   templateUrl: './sign-up.component.html',

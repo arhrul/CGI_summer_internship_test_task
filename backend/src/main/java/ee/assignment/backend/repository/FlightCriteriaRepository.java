@@ -2,12 +2,16 @@ package ee.assignment.backend.repository;
 
 import ee.assignment.backend.criteria.FlightSearchCriteria;
 import ee.assignment.backend.model.Flight;
+import ee.assignment.backend.model.Seat;
+import ee.assignment.backend.service.FlightService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +35,7 @@ public class FlightCriteriaRepository {
         Root<Flight> root = criteriaQuery.from(Flight.class);
 
         List<Predicate> predicates = new ArrayList<>();
+
 
         if (criteria.getDeparture() != null && !criteria.getDeparture().isEmpty()) {
             predicates.add(builder.equal(root.get("departure"), criteria.getDeparture()));
@@ -81,6 +86,18 @@ public class FlightCriteriaRepository {
             LocalDateTime endTime = criteria.getDepartureTime().atStartOfDay()
                     .withHour(departureEndHour).withMinute(departureEndMinute);
             predicates.add(builder.between(root.get("departureTime"), startTime, endTime));
+        }
+        if (criteria.getNumberOfPeople() != null) {
+            Subquery<Long> seatCountSubquery = criteriaQuery.subquery(Long.class);
+            Root<Seat> seatRoot = seatCountSubquery.from(Seat.class);
+
+            seatCountSubquery.select(builder.count(seatRoot.get("id")))
+                    .where(
+                            builder.equal(seatRoot.get("flight").get("id"), root.get("id")),
+                            builder.isTrue(seatRoot.get("isAvailable"))
+                    );
+
+            predicates.add(builder.greaterThanOrEqualTo(seatCountSubquery, criteria.getNumberOfPeople()));
         }
 
         if (!predicates.isEmpty()) {

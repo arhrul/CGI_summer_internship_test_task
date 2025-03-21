@@ -2,32 +2,45 @@
   <app-header></app-header>
   <div class="container">
     <div class="seats-view-wrapper d-flex justify-content-between mt-5">
-      <div class="filters">
-        <h3 class="mb-4 text-center">Filters</h3>
-        <form [formGroup]="seatsForm" (ngSubmit)="onSearch()">
-          <div>
-            <label for="place">Place</label>
-            <select formControlName="place" id="place" name="place" class="input-field mb-3">
-              <option value="" selected>-</option>
-              <option *ngFor="let place of seatPlaceValues" [value]="place.toString()">{{ place }}</option>
-            </select>
+      <div class="left-panel">
+        <div class="filters">
+          <h3 class="mb-4 text-center">Filters</h3>
+          <form [formGroup]="seatsForm" (ngSubmit)="onSearch()">
+            <div>
+              <label for="place">Place</label>
+              <select formControlName="place" id="place" name="place" class="input-field mb-3">
+                <option value="" selected>-</option>
+                <option *ngFor="let place of seatPlaceValues" [value]="place.toString()">{{ place }}</option>
+              </select>
+            </div>
+            <div>
+              <label for="legSpace">Leg space</label>
+              <select formControlName="legSpace" id="legSpace" name="legSpace" class="input-field mb-3">
+                <option value="" selected>-</option>
+                <option *ngFor="let space of legSpaceValues" [value]="space.toString()">{{ space }}</option>
+              </select>
+            </div>
+            <div>
+              <label for="seatClass">Class</label>
+              <select formControlName="seatClass" id="seatClass" name="seatClass" class="input-field mb-5">
+                <option value="" selected>-</option>
+                <option *ngFor="let classValue of seatClassValues" [value]="classValue.toString()">{{ classValue }}</option>
+              </select>
+            </div>
+            <button class="btn search-btn" type="submit">Search</button>
+          </form>
+        </div>
+        <div class="passengers mt-5">
+          <h3 class="mb-3">Passengers</h3>
+          <div class="passenger mb-3" *ngFor="let seat of selectedSeats">
+            <button class="btn"
+              (click)="assignSelectedPassenger(selectedSeats.indexOf(seat) + 1)"
+                    [ngStyle]="selectedSeats.indexOf(seat) + 1 == selectedPassenger ? { 'background-color': '#ff3859', 'color': '#ffffff' } :
+                              { 'background-color': '#e5e5e5' }">
+              Passenger {{ selectedSeats.indexOf(seat) + 1 }}: Seat {{ seat.seat.number }}
+            </button>
           </div>
-          <div>
-            <label for="legSpace">Leg space</label>
-            <select formControlName="legSpace" id="legSpace" name="legSpace" class="input-field mb-3">
-              <option value="" selected>-</option>
-              <option *ngFor="let space of legSpaceValues" [value]="space.toString()">{{ space }}</option>
-            </select>
-          </div>
-          <div>
-            <label for="seatClass">Class</label>
-            <select formControlName="seatClass" id="seatClass" name="seatClass" class="input-field mb-5">
-              <option value="" selected>-</option>
-              <option *ngFor="let classValue of seatClassValues" [value]="classValue.toString()">{{ classValue }}</option>
-            </select>
-          </div>
-          <button class="btn search-btn" type="submit">Search</button>
-        </form>
+        </div>
       </div>
       <div class="choose-seat ">
         <h3 class="mb-4 text-center">Choose Seat</h3>
@@ -57,10 +70,10 @@
                   [ngClass]="{'mb-5': seat.number >= 7 && seat.number <= 12 || seat.number >= 19 && seat.number <= 24}"
                   [disabled]="!seat.isAvailable"
                   [ngStyle]="!seat.isAvailable ? {'background-color':'#e0e0e0'} :
-                        seat.number == selectedSeat.number ? {'background-color': '#ff3859'} :
+                        checkSeat(seat) ? {'background-color': '#ff3859'} :
                         isFound(seat) ? {'background-color': '#4eb042'} :
                         {'background-color':'#C08B7D'}"
-                  (click)="onSeatClick(seat)">{{ seat.number }}
+                  (click)="onSeatClick(seat)">{{ getSeatText(seat) }}
                 </button>
               </div>
             </div>
@@ -70,10 +83,10 @@
                   [ngClass]="{'mb-5': seat.number >= 7 && seat.number <= 12 || seat.number >= 19 && seat.number <= 24}"
                   [disabled]="!seat.isAvailable"
                   [ngStyle]="!seat.isAvailable ? {'background-color':'#e0e0e0'} :
-                        seat.number == selectedSeat.number ? {'background-color': '#ff3859'} :
+                        checkSeat(seat) ? {'background-color': '#ff3859'} :
                         isFound(seat) ? {'background-color': '#4eb042'} :
                         {'background-color':'#C08B7D'}"
-                  (click)="onSeatClick(seat)">{{ seat.number }}
+                  (click)="onSeatClick(seat)">{{ getSeatText(seat) }}
                 </button>
               </div>
             </div>
@@ -84,10 +97,10 @@
                   [ngClass]="{'mb-5': seat.number >= 7 && seat.number <= 12 || seat.number >= 19 && seat.number <= 24}"
                   [disabled]="!seat.isAvailable"
                   [ngStyle]="!seat.isAvailable ? {'background-color':'#e0e0e0'} :
-                        seat.number == selectedSeat.number ? {'background-color': '#ff3859'} :
+                        checkSeat(seat) ? {'background-color': '#ff3859'} :
                         isFound(seat) ? {'background-color': '#4eb042'} :
                         {'background-color':'#C08B7D'}"
-                  (click)="onSeatClick(seat)">{{ seat.number }}
+                  (click)="onSeatClick(seat)">{{ getSeatText(seat) }}
                 </button>
               </div>
             </div>
@@ -100,10 +113,10 @@
                   [ngClass]="{'mb-5': seat.number >= 7 && seat.number <= 12 || seat.number >= 19 && seat.number <= 24}"
                   [disabled]="!seat.isAvailable"
                   [ngStyle]="!seat.isAvailable ? {'background-color':'#e0e0e0'} :
-                        seat.number == selectedSeat.number ? {'background-color': '#ff3859'} :
+                        checkSeat(seat) ? {'background-color': '#ff3859'} :
                         isFound(seat) ? {'background-color': '#4eb042'} :
                         {'background-color':'#C08B7D'}"
-                  (click)="onSeatClick(seat)">{{ seat.number }}
+                  (click)="onSeatClick(seat)">{{ getSeatText(seat) }}
                 </button>
               </div>
             </div>
@@ -114,10 +127,10 @@
                   [ngClass]="{'mb-5': seat.number >= 7 && seat.number <= 12 || seat.number >= 19 && seat.number <= 24}"
                   [disabled]="!seat.isAvailable"
                   [ngStyle]="!seat.isAvailable ? {'background-color':'#e0e0e0'} :
-                        seat.number == selectedSeat.number ? {'background-color': '#ff3859'} :
+                        checkSeat(seat) ? {'background-color': '#ff3859'} :
                         isFound(seat) ? {'background-color': '#4eb042'} :
                         {'background-color':'#C08B7D'}"
-                  (click)="onSeatClick(seat)">{{ seat.number }}
+                  (click)="onSeatClick(seat)">{{ getSeatText(seat) }}
                 </button>
               </div>
             </div>
@@ -128,10 +141,10 @@
                   [ngClass]="{'mb-5': seat.number >= 7 && seat.number <= 12 || seat.number >= 19 && seat.number <= 24}"
                   [disabled]="!seat.isAvailable"
                   [ngStyle]="!seat.isAvailable ? {'background-color':'#e0e0e0'} :
-                        seat.number == selectedSeat.number ? {'background-color': '#ff3859'} :
+                         checkSeat(seat) ? {'background-color': '#ff3859'} :
                         isFound(seat) ? {'background-color': '#4eb042'} :
                         {'background-color':'#C08B7D'}"
-                  (click)="onSeatClick(seat)">{{ seat.number }}
+                  (click)="onSeatClick(seat)">{{ getSeatText(seat) }}
                 </button>
               </div>
             </div>
@@ -147,16 +160,17 @@
             <p>{{ departureTime }}, {{ departure }} - {{ destinationTime }}, {{ destination }}</p>
           </div>
         </div>
-        <div class="cost">
-          <div class="passenger-cost d-flex justify-content-between">
-            <p>Passenger</p>
-            <p>{{ selectedSeatPrice.toFixed(2) }}€</p>
+        <div class="cost mb-4">
+          <div class="passenger-cost d-flex justify-content-between" *ngFor="let selected of selectedSeats">
+            <p>Passenger {{ selected.passengerIndex }}</p>
+            <p>{{ selected.seat.price.toFixed(2) }}€</p>
           </div>
           <div class="total d-flex justify-content-between fw-bold fs-4">
             <p>Total</p>
-            <p>{{ selectedSeatPrice.toFixed(2) }}€</p>
+            <p>{{ calculateTotal() }}€</p>
           </div>
         </div>
+        <button (click)="onBook()" class="btn book-btn">Book</button>
       </div>
     </div>
   </div>

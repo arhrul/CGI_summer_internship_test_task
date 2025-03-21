@@ -4,11 +4,11 @@ import {SeatService} from '../../core/services/seatService/seat.service';
 import {Flight} from '../../core/model/Flight';
 import {Seat} from '../../core/model/Seat';
 import {NgClass, NgForOf, NgStyle} from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HeaderComponent} from '../header/header.component';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SeatClass} from '../../core/enums/SeatClass';
 import {FooterComponent} from '../footer/footer.component';
+import {AuthenticationService} from '../../core/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-seats',
@@ -40,11 +40,14 @@ export class SeatsComponent implements OnInit {
   legSpaceValues: string[] = [];
   seatClassValues: string[] = []
 
-  selectedSeat!: Seat
   selectedSeatPrice = 0
+
+  selectedSeats: { seat: Seat, passengerIndex: number }[] = []
+  selectedPassenger = 1
 
   seatsForm!: FormGroup
   foundSeats: Seat[] = []
+
 
   departure = ''
   destination = ''
@@ -52,10 +55,14 @@ export class SeatsComponent implements OnInit {
   departureTime = ''
   destinationTime = ''
 
+  numberOfPeople = 1
+
   constructor(private route: ActivatedRoute,
               private flightService: FlightService,
               private seatService: SeatService,
-              private readonly formBuilder: FormBuilder) {
+              private readonly formBuilder: FormBuilder,
+              private authService: AuthenticationService,
+              private router: Router) {
     this.seatPlaceValues = seatService.getSeatPlaceValues()
     this.legSpaceValues = seatService.getLegSpaceValues()
     this.seatClassValues = seatService.getSeatClassValues()
@@ -63,17 +70,17 @@ export class SeatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const flightId = Number(params.get('id'));
+      const flightId = Number(params.get('flightId'));
       if (flightId) {
         this.flightId = flightId
         this.getSeats(flightId);
         this.createForm()
         this.getFlight(this.flightId)
-
-        console.log("Flight id", this.flightId)
       }
-      if (this.flight) {
 
+      const numberOfPeople = Number(params.get('numberOfPeople'))
+      if (numberOfPeople) {
+        this.numberOfPeople = numberOfPeople
       }
     });
   }
@@ -116,7 +123,6 @@ export class SeatsComponent implements OnInit {
       this.seatService.searchSeats(seatSearchCriteria).subscribe({
         next: (data) => {
           this.foundSeats = data
-          console.log("Found Seats", data)
         },
         error: (err) => {
           console.error("Error fetching seats", err)
@@ -125,20 +131,42 @@ export class SeatsComponent implements OnInit {
     }
   }
 
-  assignSelectedSeat() {
-    for (let i = 0; i < this.seats.length; i++) {
-      let seat: Seat = this.seats[i]
+  assignSelectedPassenger(passenger: number) {
+    this.selectedPassenger = passenger
+  }
+
+  assignSelectedSeats() {
+    let count = 0
+    for (let j = 0; j < this.seats.length; j++) {
+      let seat: Seat = this.seats[j]
       if (seat.isAvailable) {
-        this.selectedSeat = seat
-        this.selectedSeatPrice = seat.price
+        this.selectedSeats.push({ seat: seat, passengerIndex: count + 1 });
+        count++
+      }
+      if (count >= this.numberOfPeople) {
         return
       }
     }
   }
 
+  seatIsSelected(seat: Seat) {
+    for (let selected of this.selectedSeats) {
+      if (seat.number === selected.seat.number) {
+        return true
+      }
+    }
+    return false
+  }
+
   onSeatClick(seat: Seat) {
-    this.selectedSeat = seat
-    this.selectedSeatPrice = seat.price
+    if (!this.seatIsSelected(seat)) {
+      this.selectedSeats[this.selectedPassenger - 1] = { seat: seat, passengerIndex: this.selectedPassenger };
+      this.selectedSeatPrice = seat.price;
+    }
+  }
+
+  checkSeat(seat: Seat) {
+    return this.selectedSeats.some(s => s.seat.number == seat.number)
   }
 
   getSeats(flightId: number) {
@@ -146,14 +174,10 @@ export class SeatsComponent implements OnInit {
       next: (data) => {
         this.seats = data
         this.assignSeatsToCategories();
-        this.assignSelectedSeat()
-
+        this.assignSelectedSeats()
       }
     })
-    console.log(this.seats)
   }
-
-
 
   assignSeatsToCategories() {
     this.seats.forEach((seat, index) => {
@@ -183,6 +207,23 @@ export class SeatsComponent implements OnInit {
     console.log(this.windowLeft)
   }
 
+  calculateTotal() {
+    let result: number = 0
+    for (let selected of this.selectedSeats) {
+      result += selected.seat.price
+    }
+    return result.toFixed(2)
+  }
+
+  getSeatText(seat: Seat) {
+    for (let selected of this.selectedSeats) {
+      if (seat == selected.seat) {
+        return `P${selected.passengerIndex}`
+      }
+    }
+    return seat.number
+  }
+
   getDepartureDate() {
     this.departureDate = this.flightService.getDepartureDate(this.flight)
   }
@@ -193,5 +234,21 @@ export class SeatsComponent implements OnInit {
 
   getDestinationTime() {
     this.destinationTime = this.flightService.getDestinationTime(this.flight)
+  }
+
+  onBook() {
+    for (let selected of this.selectedSeats) {
+      const seat = selected.seat
+      seat.clientId = this.authService.getClientInfo()['id']
+      seat.isAvailable = false
+      this.seatService.updateSeat(seat).subscribe({
+        next: (data) => {
+          console.log("Seat updated!", data)
+        }, error: (err) => {
+          console.error("Error updating seat!", err)
+        }
+      })
+    }
+    this.router.navigate(['/success'])
   }
 }
