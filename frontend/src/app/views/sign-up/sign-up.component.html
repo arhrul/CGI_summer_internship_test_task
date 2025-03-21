@@ -1,0 +1,48 @@
+<div class="register-section d-flex align-items-center"
+     [ngStyle]="{'background-image': 'url(' + backgroundImage + ')'}">
+  <button class="btn back-btn text-white m-4 position-fixed top-0" [routerLink]="'/homepage'">Home</button>
+  <div class="container">
+    <div class="register-wrapper d-flex justify-content-center">
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="col-7 col-lg-6 d-flex flex-column">
+        <h1 class="text-center text-white">Sign up</h1>
+        <div class="d-block d-md-flex row">
+          <div class="form-group col-12 col-md-6">
+            <label for="inputFirstName"></label>
+            <input formControlName="firstName" type="text" class="form-control form-control-lg" id="inputFirstName" aria-describedby="nameHelp"
+                   placeholder="First Name" required>
+          </div>
+
+          <div class="form-group col-12 col-md-6">
+            <label for="inputName"></label>
+            <input formControlName="lastName" type="text" class="form-control form-control-lg" id="inputName" aria-describedby="nameHelp"
+                   placeholder="Last Name" required>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail"></label>
+          <input formControlName="email" type="email" class="form-control form-control-lg" id="inputEmail" placeholder="Email" required>
+        </div>
+
+        <div class="d-md-flex row">
+
+          <div class="form-group inner-addon inner right-addon position-relative">
+            <label for="inputPassword"></label>
+
+            <input formControlName="password" name="password"
+                   type="password"
+                   class="col-12 col-lg-6 form-control form-control-lg pwd-control"
+                   id="inputPassword" placeholder="Password" required>
+
+          </div>
+
+        </div>
+        <button type="submit" class="btn register-btn mt-5 fs-5 p-2" [disabled]="clientForm.invalid">Sign up</button>
+        <div class="have-acc d-flex justify-content-center pt-3">
+          <p class="text-white me-3">Already have an account?</p>
+          <a class="login text-white" [routerLink]="'/login'" >Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
