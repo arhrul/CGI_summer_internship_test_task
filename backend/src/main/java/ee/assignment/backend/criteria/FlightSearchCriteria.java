@@ -10,7 +10,7 @@ public class FlightSearchCriteria {
     private String departure;
     private String destination;
     private LocalDate departureTime;
-    private int numberOfPeople;
+    private Long numberOfPeople;
     private Integer durationStartTime;
     private Integer durationEndTime;
     private Integer departureStartTime;

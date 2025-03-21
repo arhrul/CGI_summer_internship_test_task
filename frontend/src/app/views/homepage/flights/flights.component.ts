@@ -37,6 +37,7 @@ export class FlightsComponent implements OnInit {
   endPrice = 1000
 
   flightsForm: FormGroup | null = null
+  numberOfPeople: number = 1
 
   constructor(private flightService: FlightService,
               private readonly formBuilder: FormBuilder,
@@ -52,7 +53,8 @@ export class FlightsComponent implements OnInit {
   onBookNow(flight: any) {
     if (this.authService.isLoggedIn()) {
       this.flightService.setSelectedFlight(flight);
-      this.router.navigate(['/seats', flight.id])
+      console.log(this.numberOfPeople)
+      this.router.navigate(['/seats', flight.id, this.numberOfPeople])
     } else {
       this.router.navigate(['/login'])
     }
@@ -63,6 +65,7 @@ export class FlightsComponent implements OnInit {
     this.flightService.flightFormData$.subscribe((form) => {
       if (form) {
         this.flightsForm = form
+        this.numberOfPeople = form.get('numberOfPeople')?.value
       }
     })
   }
@@ -100,16 +103,15 @@ export class FlightsComponent implements OnInit {
   }
 
 
-
-  onTimeSliderChange(event: any): void {
+  onTimeSliderChange(): void {
     this.updateForm()
   }
 
-  onDurationSliderChange(event: any): void {
+  onDurationSliderChange(): void {
     this.updateForm()
   }
 
-  onPriceSliderChange(event: any): void {
+  onPriceSliderChange(): void {
     this.updateForm()
   }
 

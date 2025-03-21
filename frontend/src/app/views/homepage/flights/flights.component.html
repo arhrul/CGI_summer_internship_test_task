@@ -5,7 +5,7 @@
         <h4 class="mb-5">Filters</h4>
         <div class="time-filter mb-5">
           <h5>Departure times</h5>
-          <mat-slider min="0" max="48" step="1" (input)="onTimeSliderChange($event)">
+          <mat-slider min="0" max="48" step="1" (input)="onTimeSliderChange()">
             <input matSliderStartThumb [(ngModel)]="startTime">
             <input matSliderEndThumb [(ngModel)]="endTime">
           </mat-slider>
@@ -14,7 +14,7 @@
 
         <div class="duration-filter mb-5">
           <h5>Journey duration</h5>
-          <mat-slider min="0" max="30" step="1"  (input)="onDurationSliderChange($event)">
+          <mat-slider min="0" max="30" step="1"  (input)="onDurationSliderChange()">
             <input matSliderStartThumb [(ngModel)]="startDuration">
             <input matSliderEndThumb [(ngModel)]="endDuration">
           </mat-slider>
@@ -23,7 +23,7 @@
 
         <div class="price-filter mb-5">
           <h5>Price range</h5>
-          <mat-slider min="0" max="1000" step="10"  (input)="onPriceSliderChange($event)">
+          <mat-slider min="0" max="1000" step="10"  (input)="onPriceSliderChange()">
             <input matSliderStartThumb [(ngModel)]="startPrice">
             <input matSliderEndThumb [(ngModel)]="endPrice">
           </mat-slider>

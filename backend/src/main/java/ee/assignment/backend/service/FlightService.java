@@ -58,6 +58,8 @@ public class FlightService {
         return flightMapper.toFlightDTO(savedFlight);
     }
 
+
+
     public void deleteFlight(Long id) {
         Flight flight = getFlightById(id);
         flightRepository.delete(flight);

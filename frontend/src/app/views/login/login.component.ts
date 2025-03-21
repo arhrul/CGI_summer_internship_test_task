@@ -13,7 +13,6 @@ import {NgIf, NgStyle} from '@angular/common';
   imports: [
     ReactiveFormsModule,
     NgStyle,
-    NgIf,
     RouterLink
   ],
   templateUrl: './login.component.html',

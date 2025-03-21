@@ -39,8 +39,8 @@ export class SeatService {
     return this.http.get<Seat>(`${this.apiUrl}/${id}`)
   }
 
-  createSeat(seat: Seat): Observable<Seat> {
-    return this.http.post<Seat>(this.apiUrl, seat)
+  updateSeat(seat: Seat): Observable<Seat> {
+    return this.http.put<Seat>(`${this.apiUrl}/${seat.id}`, seat)
   }
 
   createSeatsForFlight(flightId: number): Observable<Seat[]> {

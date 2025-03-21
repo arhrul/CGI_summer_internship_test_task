@@ -68,6 +68,8 @@
   background: #eeeeef;
   padding: 30px;
   border-radius: 20px;
+  height: 100%;
+
 }
 
 .details {
@@ -140,4 +142,28 @@
 
 .departure-destination p {
   margin: 0;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.book-btn {
+  border-radius: 8px;
+  background: #C08B7D;
+  padding: 10px;
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.book-btn:hover {
+  background: #9a6f64;
 }

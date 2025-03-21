@@ -19,7 +19,6 @@ import {AuthenticationService} from '../../core/services/authentication/authenti
     NgForOf,
     FlightsComponent,
     FooterComponent,
-    RouterLink
   ],
   templateUrl: './homepage.component.html',
   standalone: true,
