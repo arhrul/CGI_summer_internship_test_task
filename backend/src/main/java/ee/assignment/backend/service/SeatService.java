@@ -1,5 +1,6 @@
 package ee.assignment.backend.service;
 
+import ee.assignment.backend.criteria.SeatSearchCriteria;
 import ee.assignment.backend.dto.SeatDTO;
 import ee.assignment.backend.enums.LegSpace;
 import ee.assignment.backend.enums.SeatClass;
@@ -10,19 +11,26 @@ import ee.assignment.backend.model.Flight;
 import ee.assignment.backend.model.Seat;
 import ee.assignment.backend.repository.ClientRepository;
 import ee.assignment.backend.repository.FlightRepository;
+import ee.assignment.backend.repository.SeatCriteriaRepository;
 import ee.assignment.backend.repository.SeatRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SeatService {
 
     private final SeatRepository seatRepository;
     private final ClientRepository clientRepository;
     private final FlightRepository flightRepository;
+
+    private SeatCriteriaRepository seatCriteriaRepository;
+
     private final SeatMapper seatMapper;
     private static final double LIMITED_LEG_SPACE_COFF = 1;
     private static final double STANDARD_LEG_SPACE_COFF = 1.1;
@@ -53,7 +61,7 @@ public class SeatService {
         return seatMapper.toSeatDTO(savedSeat);
     }
 
-    public double calculatePrice(double standard_price,
+    private double calculatePrice(double standard_price,
                                  LegSpace legSpace,
                                  SeatClass seatClass, SeatPlace seatPlace) {
         double total = standard_price;
@@ -87,6 +95,60 @@ public class SeatService {
             total += standard_price * AISLE_PLACE_COFF - standard_price;
         }
         return total;
+    }
+
+    public List<SeatDTO> createSeatsForFlight(Long flightId) {
+        Flight flight = getFlightById(flightId);
+        List<SeatDTO> seatDTOList = new ArrayList<>();
+        for (int seatNumber = 1; seatNumber <= 36; seatNumber++) {
+            boolean isAvailable = Math.random() < 0.5;
+            SeatClass seatClass = findSeatClass(seatNumber);
+            SeatPlace seatPlace = findSeatPlace(seatNumber);
+            LegSpace legSpace = findLegSpace(seatNumber);
+            double price = calculatePrice(flight.getPrice(), legSpace, seatClass, seatPlace);
+            Seat seat = new Seat();
+            seat.setNumber(seatNumber);
+            seat.setFlight(flight);
+            seat.setSeatClass(seatClass);
+            seat.setPlace(seatPlace);
+            seat.setLegSpace(legSpace);
+            seat.setPrice(price);
+            seat.setIsAvailable(isAvailable);
+            seatRepository.save(seat);
+            seatDTOList.add(seatMapper.toSeatDTO(seat));
+        }
+        return seatDTOList;
+    }
+
+    private SeatClass findSeatClass(int seatNumber) {
+        if (seatNumber >= 1 && seatNumber <= 12) {
+            return SeatClass.FIRST;
+        } else if (seatNumber >= 13 && seatNumber <= 24) {
+            return SeatClass.BUSINESS;
+        } else {
+            return SeatClass.ECONOMY;
+        }
+    }
+
+    private SeatPlace findSeatPlace(int seatNumber) {
+        int position = (seatNumber - 1) % 6;
+        if (position == 0 || position == 5) {
+            return SeatPlace.WINDOW;
+        } else if (position == 1 || position == 4) {
+            return SeatPlace.MIDDLE;
+        } else {
+            return SeatPlace.AISLE;
+        }
+    }
+
+    private LegSpace findLegSpace(int seatNumber) {
+        if (seatNumber >= 1 && seatNumber <= 12) {
+            return LegSpace.EXTRA;
+        } else if ((seatNumber >= 13 && seatNumber <= 18) || seatNumber >= 25 && seatNumber <= 30) {
+            return LegSpace.STANDARD;
+        } else {
+            return LegSpace.LIMITED;
+        }
     }
 
     public Seat getSeatById(Long id) {
@@ -139,6 +201,11 @@ public class SeatService {
     public List<SeatDTO> getSeatsByFlightId(Long flightId) {
         Flight flight = getFlightById(flightId);
         List<Seat> seats = seatRepository.findByFlight(flight);
+        seats.sort(Comparator.comparing(Seat::getNumber));
         return seatMapper.toSeatDTOList(seats);
+    }
+
+    public List<SeatDTO> searchSeats(SeatSearchCriteria seatSearchCriteria) {
+        return seatMapper.toSeatDTOList(seatCriteriaRepository.searchSeats(seatSearchCriteria));
     }
 }

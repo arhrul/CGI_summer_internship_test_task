@@ -3,36 +3,11 @@
     <div class="seat-management-wrapper">
       <form [formGroup]="seatForm" (ngSubmit)="onSubmit()">
         <div class="d-flex flex-column w-25 mb-4">
-          <label for="number">Number</label>
-          <input formControlName="number" type="number" id="number">
-        </div>
-        <div class="d-flex flex-column w-25 mb-4">
-          <label for="place">Place</label>
-          <select formControlName="place" id="place" name="place">
-            <option value="" selected disabled>Select</option>
-            <option *ngFor="let place of getSeatPlaceValues()" [value]="place">{{ place }}</option>
-          </select>
-        </div>
-        <div class="d-flex flex-column w-25 mb-4">
-          <label for="legSpace">Leg space</label>
-          <select formControlName="legSpace" id="legSpace" name="departure">
-            <option value="" selected disabled>Select</option>
-            <option *ngFor="let place of getLegSpaceValues()" [value]="place">{{ place }}</option>
-          </select>
-        </div>
-        <div class="d-flex flex-column w-25 mb-4">
-          <label for="seatClass">Seat class</label>
-          <select formControlName="seatClass" id="seatClass" name="departure">
-            <option value="" selected disabled>Select</option>
-            <option *ngFor="let place of getSeatClassValues()" [value]="place">{{ place }}</option>
-          </select>
-        </div>
-        <div class="d-flex flex-column w-25 mb-4">
-          <label for="flightId">Flight Id</label>
+          <label for="flightId">Flight id</label>
           <input formControlName="flightId" type="number" id="flightId">
         </div>
         <button type="submit" class="btn btn-primary m-3" [disabled]="seatForm.invalid">
-          Create Seat
+          Create Seats
         </button>
       </form>
 
@@ -45,6 +20,7 @@
           <th>Leg space</th>
           <th>Seat class</th>
           <th>Price</th>
+          <th>Available</th>
           <th>Flight ID</th>
           <th>Client ID</th>
           <th></th>
@@ -58,6 +34,7 @@
           <td>{{ seat.legSpace }}</td>
           <td>{{ seat.seatClass }}</td>
           <td>{{ seat.price.toFixed(2) }} €</td>
+          <td>{{ seat.isAvailable }}</td>
           <td>{{ seat.flightId  }}</td>
           <td>{{ seat.clientId || "None" }}</td>
           <td><button class="btn btn-danger btn-fixed ms-2" (click)="deleteSeat(seat.id)">Delete</button></td>
