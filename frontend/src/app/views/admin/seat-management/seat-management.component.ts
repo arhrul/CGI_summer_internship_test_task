@@ -38,10 +38,6 @@ export class SeatManagementComponent implements OnInit{
 
   createForm() {
     this.seatForm = this.formBuilder.group({
-      number: ['', [Validators.required]],
-      place: ['', [Validators.required]],
-      legSpace: ['', [Validators.required]],
-      seatClass: ['', [Validators.required]],
       flightId: ['', [Validators.required]],
     })
   }
@@ -51,10 +47,10 @@ export class SeatManagementComponent implements OnInit{
       return;
     }
 
-    const newSeat = this.seatForm.value
-    this.seatService.createSeat(newSeat).subscribe({
-      next: (seat) => {
-        console.log('Seat created successfully:', seat)
+    const flightId = this.seatForm.get('flightId')?.value;
+    this.seatService.createSeatsForFlight(flightId).subscribe({
+      next: (seats) => {
+        console.log('Seats created successfully:', seats)
         this.seatForm.reset()
       },
       error: (error) => {
@@ -69,17 +65,5 @@ export class SeatManagementComponent implements OnInit{
         this.seats = this.seats.filter(seat => seat.id !== id)
       }
     })
-  }
-
-  getSeatPlaceValues() {
-    return Object.values(SeatPlace);
-  }
-
-  getLegSpaceValues() {
-    return Object.values(LegSpace)
-  }
-
-  getSeatClassValues() {
-    return Object.values(SeatClass)
   }
 }

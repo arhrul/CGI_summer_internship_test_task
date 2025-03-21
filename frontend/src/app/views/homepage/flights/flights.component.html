@@ -61,7 +61,7 @@
               </td>
               <td class="total-time fw-bold">{{ formatDuration(flight.duration) }}</td>
               <td class="fw-bold">{{ formatPrice(flight.price) }}€</td>
-              <td><button class="btn book-btn">BOOK NOW</button></td>
+              <td><button class="btn book-btn" (click)="onBookNow(flight) ">BOOK NOW</button></td>
             </tr>
             </tbody>
           </table>

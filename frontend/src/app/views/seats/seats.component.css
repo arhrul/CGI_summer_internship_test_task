@@ -1,0 +1,143 @@
+.seats button {
+  background-color: #C08B7D;
+  color: white;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  margin: 5px 0;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 50px;
+}
+
+.seats button[disabled] {
+  background-color: #e0e0e0;
+  color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+.seats button:not([disabled]):hover {
+  background-color: #9a6f64;
+  transform: translateY(-1px);
+}
+
+.seats button:not([disabled]):active {
+  background-color: #6c4e47;
+  transform: translateY(1px);
+}
+
+.legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+}
+
+.available-color {
+  border: 10px solid #C08B7D;
+}
+
+.selected-color {
+  border: 10px solid #ff3859;
+
+}
+.occupied-color {
+  border: 10px solid #e0e0e0;
+}
+
+.filtered-color {
+  border: 10px solid #4eb042;
+}
+
+.line {
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+}
+
+.filters {
+  background: #eeeeef;
+  padding: 30px;
+  border-radius: 20px;
+  height: 100%;
+}
+
+.choose-seat {
+  background: #eeeeef;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.details {
+  background: #eeeeef;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.details h4 {
+  margin: 0;
+}
+
+
+.cost {
+  background: #eeeeef;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.total p {
+  margin: 0;
+}
+
+
+.input-field {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background: rgba(40, 56, 65, 0.06);
+  border: 1px solid #e5e5e5;
+  appearance: none;
+  width: 150px;
+}
+
+.input-field:focus {
+  border: 1px solid #b0b0b0;
+  outline: none;
+}
+
+.input-field option {
+  color: #283841;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+
+.search-btn {
+  border-radius: 8px;
+  background: #C08B7D;
+  padding: 10px;
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.search-btn:hover {
+  background: #9a6f64;
+}
+
+
+.departure-destination p {
+  margin: 0;
+}
