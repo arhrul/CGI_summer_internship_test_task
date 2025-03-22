@@ -105,7 +105,8 @@ export class SeatsComponent implements OnInit {
       flightId: [this.flightId],
       place: [''],
       legSpace: [''],
-      seatClass: ['']
+      seatClass: [''],
+      nextToExit: [false]
     })
   }
 

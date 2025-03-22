@@ -44,6 +44,19 @@ public class SeatCriteriaRepository {
             predicates.add(builder.equal(root.get("seatClass"), criteria.getSeatClass().name()));
         }
 
+        if (criteria.getNextToExit() != null && criteria.getNextToExit()) {
+            predicates.add(
+                    builder.or(
+                            builder.equal(root.get("number"), 7),
+                            builder.equal(root.get("number"), 8),
+                            builder.equal(root.get("number"), 9),
+                            builder.equal(root.get("number"), 13),
+                            builder.equal(root.get("number"), 14),
+                            builder.equal(root.get("number"), 15)
+                    )
+            );
+        }
+
         if (!predicates.isEmpty()) {
             criteriaQuery.select(root).where(builder.and(predicates.toArray(new Predicate[0])));
         } else {
