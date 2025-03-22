@@ -11,4 +11,5 @@ public class SeatSearchCriteria {
     private SeatPlace place;
     private LegSpace legSpace;
     private SeatClass seatClass;
+    private Boolean nextToExit;
 }

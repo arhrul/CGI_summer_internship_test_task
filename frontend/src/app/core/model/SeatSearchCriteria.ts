@@ -7,4 +7,5 @@ export interface SeatSearchCriteria {
   place: SeatPlace
   legSpace: LegSpace
   seatClass: SeatClass
+  nextToExit: boolean
 }

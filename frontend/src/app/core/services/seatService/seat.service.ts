@@ -61,6 +61,7 @@ export class SeatService {
     params = params.set('place', seatSearchCriteria.place)
     params = params.set('legSpace', seatSearchCriteria.legSpace)
     params = params.set('seatClass', seatSearchCriteria.seatClass)
+    params = params.set('nextToExit', seatSearchCriteria.nextToExit)
     return this.http.get<any>(`${this.apiUrl}/search`, {params}).pipe(
       map(response => response.content || response)
     )
