@@ -155,6 +155,7 @@ public class SeatService {
         return seatRepository.findById(id).orElse(null);
     }
 
+
     public SeatDTO getSeat(Long id) {
         Seat seat = getSeatById(id);
         return seatMapper.toSeatDTO(seat);
@@ -202,6 +203,12 @@ public class SeatService {
         Flight flight = getFlightById(flightId);
         List<Seat> seats = seatRepository.findByFlight(flight);
         seats.sort(Comparator.comparing(Seat::getNumber));
+        return seatMapper.toSeatDTOList(seats);
+    }
+
+    public List<SeatDTO> getSeatsByClientId(Long clientId) {
+        Client client = getClientById(clientId);
+        List<Seat> seats = seatRepository.findByClient(client);
         return seatMapper.toSeatDTOList(seats);
     }
 

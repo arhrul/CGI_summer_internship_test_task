@@ -1,0 +1,89 @@
+<div class="profile-section " [ngStyle]="{'background-image': 'url(' + bgPic + ')'}">
+  <app-header></app-header>
+  <div class="container">
+    <div class="profile-wrapper">
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+        <div class="d-flex flex-column align-items-center gap-2">
+          <div class="form-group col-md-4">
+            <label for="firstName">First Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="firstName"
+                   formControlName="firstName" [readonly]="!isEditing">
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="lastName">Last Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="lastName"
+                   formControlName="lastName"
+                   [readonly]="!isEditing">
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="email">Email</label>
+            <input type="email"
+                   class="form-control"
+                   id="email"
+                   formControlName="email"
+                   [readonly]="!isEditing">
+          </div>
+
+        </div>
+        <div class="button-container gap-5 d-flex justify-content-center mt-5 mb-5">
+          <button type="submit"
+                  class="btn btn-primary"
+                  [disabled]="!isEditing">
+            Save Changes
+          </button>
+          <button type="button"
+                  class="btn btn-secondary phone-input"
+                  (click)="onEditClick()">
+            {{ isEditing ? 'Cancel' : 'Change Info' }}
+          </button>
+        </div>
+      </form>
+
+      <table class="flight-table mb-4 table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>Take off</th>
+          <th>Landing</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Duration</th>
+          <th>Seat number</th>
+          <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let seat of seats; let i = index">
+          <td *ngIf="flights[i]" class="departure">
+            <p> {{ flights[i].departure }} </p>
+          </td>
+          <td *ngIf="flights[i]" class="destination">
+            <p>{{ flights[i].destination }}</p>
+          </td>
+          <td *ngIf="flights[i]">
+            <p>{{ getFlightDate(flights[i]) }}</p>
+          </td>
+          <td *ngIf="flights[i]">
+            <p>{{ getFlightTime(flights[i]) }}</p>
+          </td>
+          <td *ngIf="flights[i]">
+            <p>{{ getDuration(flights[i]) }}</p>
+          </td>
+          <td>
+            <p>{{ seat.number }}</p>
+          </td>
+          <td>
+            <p>{{ seat.price.toFixed(2) }}€</p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

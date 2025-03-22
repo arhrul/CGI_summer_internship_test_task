@@ -39,6 +39,10 @@ export class SeatService {
     return this.http.get<Seat>(`${this.apiUrl}/${id}`)
   }
 
+  getSeatsByClientId(id: number): Observable<Seat[] > {
+    return this.http.get<Seat[]>(`${this.apiUrl}/client/${id}`)
+  }
+
   updateSeat(seat: Seat): Observable<Seat> {
     return this.http.put<Seat>(`${this.apiUrl}/${seat.id}`, seat)
   }

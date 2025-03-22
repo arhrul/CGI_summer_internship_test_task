@@ -5,6 +5,7 @@ import {SeatsComponent} from './views/seats/seats.component';
 import {SignUpComponent} from './views/sign-up/sign-up.component';
 import {LoginComponent} from './views/login/login.component';
 import {SuccessComponent} from './views/success/success.component';
+import {ProfileComponent} from './views/profile/profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'homepage', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'seats/:flightId/:numberOfPeople', component: SeatsComponent },
   { path: 'success', component: SuccessComponent },
+  { path: 'profile', component: ProfileComponent },
 
   { path: '**', redirectTo: 'homepage' },
 ];

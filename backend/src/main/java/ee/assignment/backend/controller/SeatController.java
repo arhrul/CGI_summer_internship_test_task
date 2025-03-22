@@ -57,6 +57,11 @@ public class SeatController {
         return ResponseEntity.ok(seats);
     }
 
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<List<SeatDTO>> getSeatsByClientId(@PathVariable Long clientId) {
+        List<SeatDTO> seats = seatService.getSeatsByClientId(clientId);
+        return ResponseEntity.ok(seats);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<SeatDTO> updateSeat(@PathVariable Long id, @RequestBody SeatDTO seatDTO) {
