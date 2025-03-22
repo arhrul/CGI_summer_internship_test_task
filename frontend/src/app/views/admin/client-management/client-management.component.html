@@ -1,0 +1,27 @@
+<div class="flight-management">
+  <div class="container">
+    <div class="flight-management-wrapper">
+
+      <table class="table table-striped table-bordered">
+        <thead class="position-sticky top-0">
+        <tr>
+          <th>Client ID</th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let client of clients">
+          <td>{{ client.id }}</td>
+          <td>{{ client.firstName }}</td>
+          <td>{{ client.lastName }}</td>
+          <td>{{ client.email }}</td>
+          <td><button class="btn btn-danger btn-fixed ms-2" (click)="deleteClient(client)">Delete</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
