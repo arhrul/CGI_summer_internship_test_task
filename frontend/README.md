@@ -1,59 +1,42 @@
 # Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+## Description
+This is the frontend application for the Flight Booking Management System, built using Angular. It provides a user-friendly interface for managing flight bookings.
 
-## Development server
+## Technologies Used
+- Angular 18
+- TypeScript
+- Bootstrap
 
-To start a local development server, run:
+## Prerequisites
+Before you begin, ensure you have the following installed on your machine:
 
-```bash
-ng serve
-```
+- **Node.js**: Download and install from [Node.js official website](https://nodejs.org/).
+- **Angular CLI**: Install globally using npm:
+  ```bash
+  npm install -g @angular/cli
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/arhrul/CGI_summer_internship_test_task.git
 
-## Code scaffolding
+2. **Navigate into the project directory**
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+    ```bash
+    cd frontend
 
-```bash
-ng generate component component-name
-```
+3. **Install Dependencies**
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+    ```bash
+    npm install
 
-```bash
-ng generate --help
-```
+## How to Run the Application
 
-## Building
+    ng serve
+or use command:
 
-To build the project run:
+    npm start
+## How to Build the Application
+To create a production-ready build:
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+    ng build --prod
